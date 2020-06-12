@@ -1,0 +1,9 @@
+<h4>添加分类</h4>
+<br>
+<%= form_for [:admin, @category] do |f|%>
+  请填写权重: <%= f.number_field :weight, style: "width: 100%" %><br>
+  请编写分类标题：<%=f.text_field :title, style: "width: 100%" %><br> 
+  请编写分类描述：<%=f.text_field :destination, style: "width: 100%" %><br><br>
+  <%=f.submit '提交', class: "btn btn-sm btn-primary"%>
+  <%=f.button '取消', class: "btn btn-sm btn-danger", "data-dismiss": "modal"%>
+<%end%>

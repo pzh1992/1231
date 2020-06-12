@@ -1,0 +1,33 @@
+<h1>优惠券审核列表：</h1>
+<table border='1px' cellspacing="0px" width="100%">
+	<tr>
+		
+		<td>登录账号</td>
+		<td>是否有效</td>
+		<td>优惠券状态</td>
+		<td>优惠券金额</td>
+		<td>通过日期</td>
+		<td>操作</td>
+		
+		
+	</tr>
+	<% @coupons.each_with_index do |coupon| %>
+	<tr>
+		<td><%= coupon.user.try :email %></td>
+		<td><%= coupon.is_active ? "有效" : "无效" %></td>
+		<td><%= coupon.status %></td>
+		<td><%= coupon.money %></td>
+		<td><%= (coupon.updated_at + 8 * 60 * 60).to_s[0..19] %></td>
+		<td>
+			<% if coupon.is_active %>
+			    <%=form_tag look_through_update_users_path, method: :post do%>
+			    <input type="hidden" name='id' value='<%=coupon.id%>'>
+			    <%=submit_tag '通过'%>
+		    <%end%>
+		<%end%>
+			
+
+		</td>
+	</tr>
+	<% end %>
+</table>

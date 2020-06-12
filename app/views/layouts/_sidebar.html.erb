@@ -1,0 +1,39 @@
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  <div class="container">
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+
+        <!-- <li class="nav-item">
+          <a class="nav-link" href="/" style="font-size: 17px;">首页</a>
+        </li> -->
+
+        <li class="nav-item">
+          <a class="nav-link" href="/categories" style="font-size: 15px;">学习中心</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="<%=root_path(:flag => 'author')%>" style="font-size: 15px;">联系作者</a>
+        </li>
+      <%if current_user.present? %>
+
+        <li class="nav-item">
+          <a class="nav-link" href="/users/center" style="font-size: 15px;">个人中心</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/sessions/delete_login_out" style="font-size: 15px;">退出账号</a>
+        </li>
+      <%else%>
+        <li class="nav-item">
+          <a class="nav-link" href="/register" style="font-size: 15px;">注册账号</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/login" style="font-size: 15px;">登录账号</a>
+        </li>
+      <%end%>
+
+
+      </ul>
+    </div>
+  </div>
+</nav>
+
+

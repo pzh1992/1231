@@ -1,0 +1,33 @@
+<a href="/users/look_through" class="btn btn-info pull-right">审核列表</a>
+
+<h1>用户列表：</h1>
+<table  border='1px' cellspacing="0px" width="100%">
+  <tr>
+    <td>权限</td>
+    <td>登录号</td>
+    <td>手机号</td>
+    <td>推荐码</td>
+    <td>到期时间</td>
+    <td>账号是否可用</td>
+    <td>操作</td>
+  </tr>
+  <% @users.each do |user|%>
+  <tr>
+    <td><%= user.status %></td>
+    <td><%= user.email %></td>
+    <td><%= user.telephone %></td>
+    <td><%= user.offer_code %></td>
+    <td><%= user.end_time.to_s[0..19] %></td>
+    <td><%= user.is_active %></td>
+    <td>
+      <%= link_to '修改', edit_user_path(user)%> |
+      <%= link_to "下架/上架", user, method: :delete, data:{confirm: "确认下架/上架该用户吗？"}%>
+    </td>
+
+  </tr>
+  <%end%>
+</table>
+
+
+
+<%= will_paginate @users%>

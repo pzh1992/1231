@@ -1,0 +1,7 @@
+<h4>添加角色</h4>
+<br>
+<%= form_for [:admin, @role] do |f|%>
+  角色名称: <%= f.text_field :title, style: "width: 100%" %><br><br>
+  <%=f.submit '提交', class: "btn btn-sm btn-primary"%>
+  <%=f.button '取消', class: "btn btn-sm btn-danger", "data-dismiss": "modal"%>
+<%end%>

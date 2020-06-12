@@ -1,0 +1,151 @@
+<!-- <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500"> -->
+<link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="/assets/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/assets/css/form-elements.css">
+<link rel="stylesheet" href="/assets/css/style.css">
+<link rel="shortcut icon" href="/assets/ico/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/assets/ico/apple-touch-icon-144-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/assets/ico/apple-touch-icon-114-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/assets/ico/apple-touch-icon-72-precomposed.png">
+<link rel="apple-touch-icon-precomposed" href="/assets/ico/apple-touch-icon-57-precomposed.png">
+
+<title>Register</title>
+<div class="top-content">
+  <div class="inner-bg">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-6 col-sm-offset-3 form-box">
+          <div class="form-top">
+            <div class="form-top-left">
+              <h2>ROR全栈课堂</h2>
+              <p>请填写注册信息：</p>
+            </div>
+            <div class="form-top-right">
+              <i class="fa fa-key"></i>
+            </div>
+          </div>
+          <div class="form-bottom">
+              <div class="form-group">
+                <%= form_tag '/users', onsubmit: "return check()",method: :post do%>
+                <input type="text" name="email" placeholder="请输入您的手机号" class="form-username form-control" required="true" id="form-username">
+                <span id="join_us">
+                
+                </span>
+              </div>
+              
+                <span id="join_token">
+
+                  <div class="form-group">
+                    <input type="text" name="phone_token" placeholder="请输入验证码" class="form-username form-control" required="true" id="phone_token" style="margin-bottom: 10px;width: 78%;display: inline;">
+                    <input type="button" id='btn_token' onclick="get_code('<%= form_authenticity_token %>')" value="获取验证码" class="btn btn-warning" style="width: 20%;margin-bottom: 10px;height: 45px;"/>
+                    <input type="button" value="下一步" onclick="registerCheck('<%= form_authenticity_token %>')" class="btn btn-primary" style="width: 100%;height: 45px;"/>
+                  </div>
+                </span>
+              <%end%>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/assets/js/jquery-1.11.1.min.js"></script>
+<script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="/assets/js/jquery.backstretch.min.js"></script>
+<script src="/assets/js/scripts.js"></script>
+<script type="text/javascript">
+
+  function counter (secs){
+      var counterNum = document.getElementById('btn_token');
+      counterNum.value = '重新发送' + "(" + secs + "s)";
+      $('#btn_token').attr("disabled",true);
+      if (--secs > 0) {
+        var timer = setTimeout("counter("+secs+")", 1000);
+      }else{
+        clearTimeout(timer);
+        counterNum.value = '重新发送'
+        $('#btn_token').attr("disabled",false);
+      }
+    }
+     
+  function get_code(authen_token){
+     var cellphone = $('#form-username').val()
+     $.ajax({
+      type:'post',
+      async: false,
+      data: {'cellphone': cellphone, "authenticity_token": authen_token },
+      url: '<%= cellphone_tokens_path %>',
+      success:function(data){
+        if(data['status']=='error'){
+          alert(data['message']) 
+        }
+        if(data['status']=='ok'){
+          counter('120');
+        }
+      }
+     })
+  }
+
+  function registerCheck(form_authenticity){
+    var cellphone = $('#form-username').val()
+    var phone_token = $('#phone_token').val()
+    if(cellphone==""){
+      alert('手机号不能为空')
+      return false;
+    }
+    if(phone_token==""){
+      alert('验证码不能为空')
+      return false;
+    }
+    $.ajax({
+      type:'post',
+      async: false,
+      data: {
+        'cellphone': cellphone, 
+        'phone_token':phone_token,
+        "authenticity_token": form_authenticity
+      },
+      url: '<%= ajax_create_cellphone_tokens_path %>',
+      success:function(data){
+        if(data['status']=='error'){
+          alert(data['message']) 
+        }
+        if(data['status']=='ok'){
+          $('#join_token').remove()
+          $('#join_us').append('<input type="password" name="password" placeholder="请输入密码" class="form-password form-control" required="true" id="password"><input type="password" name="password_confirmation" placeholder="请输入确认密码" class="form-password form-control" required="true" id="password_confirmation"><button type="submit" class="btn" style="width:100%;">立即注册</button>')
+         }
+       }
+     })
+  }
+
+  function check(){
+    var password = $('#password').val()
+    var password_confirmation = $('#password_confirmation').val() 
+    var register_token = $("#register_token").val()
+    if(password != password_confirmation){
+      alert("密码不一致")
+      return false;
+    }
+    var bool = true;
+    $.ajax({
+      type:'post',
+      async: false,
+      data: {
+        'register_token': register_token,
+        "authenticity_token": "<%=form_authenticity_token%>"
+      },
+      url: '<%= ajax_select_user_cellphone_tokens_path %>',
+      success:function(data){
+        if(data['status']=='error'){
+          bool = false;
+        }
+      }
+    })
+    if(!bool){
+      alert("请正确填写推荐码")
+      return bool;
+    }
+  }
+</script>
+
+
+ 

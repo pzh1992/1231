@@ -1,0 +1,50 @@
+<table class="table table-striped table-bordered table-hover"> 
+	<thead>
+		<th>分类标题</th>
+		<th>权重</th>
+		<th>分类描述</th>
+        <th>图片</th>
+		<th>操作（<%=link_to "添加", new_admin_category_path, remote: true, 'data-toggle': "modal", 'data-target': "#layer", class: 'btn btn-minier btn-primary' %>）</th>
+
+	</thead>
+	<% @categories.each_with_index do |category, index|%>             
+         <tbody>
+         	
+         	<td id="t_<%=index%>" ondblclick="categoryEdit('<%=category.id%>',this,'title')"><%= category.title %></td>
+         	
+         	<td id="w_<%= index %>" ondblclick="categoryEdit('<%=category.id%>',this,'weight')"><%=category.weight%></td>
+         	
+         	<td id="d_<%= index %>" ondblclick="categoryEdit('<%=category.id%>',this,'destination')"><%= category.destination %></td>
+
+         	 
+            <td id="i_<%= index %>" ondblclick="categoryEdit('<%=category.id%>',this,'image_show')"><%=image_tag category.image_show, size: "90x50" %></td>
+            <td>
+                <a href="javascript:void(0)" id="btn_<%=index%>" onclick="selectMethod(this,'<%=category.id%>','<%=form_authenticity_token%>')" class='btn btn-minier btn-info'>
+                    <%=category.status == 'on' ? '上架' : '下架' %>
+                </a>
+                |
+            	 
+            	<%= link_to '删除', admin_category_path(category), method: :delete, data: {confirm: '您确认删除吗？'},class: 'btn btn-minier btn-danger'%>
+            </td>
+
+         </tbody>
+      <%end%>
+</table>
+
+<div role="dialog" class="modal fade" id="layer">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+	    <span id="new"></span>
+	  </div>
+	</div>
+  </div>
+</div>
+
+ 
+ 
+
+
+
+
+

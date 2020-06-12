@@ -1,0 +1,24 @@
+<div style="clear: both">
+<hr>
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <p class="copyright text-muted">
+          <a href="/categories">学习中心</a>
+         <%if current_user.present? %>
+        | <a href="/users/center">个人中心</a>
+        | <a href="<%=root_path(:flag => 'author')%>">联系客服</a>
+        | <a href="/sessions/delete_login_out">退出账号</a>
+         <%else%>
+        | <a href="<%=root_path(:flag => 'author')%>">联系客服</a>
+        | <a href="/login">登录账号</a>
+         <%end%>
+        
+        </p>
+        <p class="copyright text-muted">© ruby on rails 全栈课堂 京ICP备18012947号</p>
+      </div>
+    </div>
+  </div>
+</footer>
+</div>

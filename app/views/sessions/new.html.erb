@@ -1,0 +1,55 @@
+<!-- <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500"> -->
+<link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="/assets/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/assets/css/form-elements.css">
+<link rel="stylesheet" href="/assets/css/style.css">
+<link rel="shortcut icon" href="/assets/ico/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/assets/ico/apple-touch-icon-144-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/assets/ico/apple-touch-icon-114-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/assets/ico/apple-touch-icon-72-precomposed.png">
+<link rel="apple-touch-icon-precomposed" href="/assets/ico/apple-touch-icon-57-precomposed.png">
+<% unless flash[:notice].blank? %>
+  <div class="alert alert-info"> <%= flash[:notice]%></div>
+<%end%>
+<title>Login</title>
+<div class="top-content">
+  <div class="inner-bg">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-6 col-sm-offset-3 form-box">
+          <div class="form-top">
+            <div class="form-top-left">
+              <h2>ROR全栈课堂</h2>
+              <p>请输入您的账号密码:</p>
+            </div>
+            <div class="form-top-right">
+              <i class="fa fa-key"></i>
+            </div>
+          </div>
+          <div class="form-bottom">
+
+
+            <%= form_tag "/sessions", :method => 'post' do%>
+              <div class="form-group">
+                <label class="sr-only" for="form-username">用户名</label>
+                <input type="text" name="email" placeholder="用户名..." class="form-username form-control" required="true" id="form-username">
+              </div>
+              <div class="form-group">
+                <label class="sr-only" for="form-password">密码</label>
+                <input type="password" name="password" placeholder="密码..." class="form-password form-control" required="true" id="form-password">
+              </div>
+              <button type="submit" class="btn">登录</button>
+              <p  class='pull-left'>没有账号？</p>
+              <a href="/register" class='pull-left' style="color: #000000">注册&nbsp;</a>
+              <a href="/password" class='pull-right' style="color: #000000">忘记密码？</a>
+            <%end%>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/assets/js/jquery-1.11.1.min.js"></script>
+<script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="/assets/js/jquery.backstretch.min.js"></script>
+<script src="/assets/js/scripts.js"></script>

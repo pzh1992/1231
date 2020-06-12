@@ -1,0 +1,80 @@
+<%= render "/layouts/header_articles" %>
+
+
+<% if on?(@article) or is_admin? %>
+  <article>
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto"  style="box-shadow: 1px 2px 4px 0 rgba(0,0,0,0.25);background: #fff;">
+          <br>
+          <h1><%= @article.title %></h1>
+          <hr style="border: 1px solid #eeeeee;"><br>
+          <%= @article.content.html_safe %>
+          
+          <% if exercise_name?(@article) %>
+            <br><br>
+            <a class="btn btn-info btn-sm pull-left" href="http://video.zhihuichina.net.cn/<%= @article.exercise_name %>">
+              <font color="#ffffff">课堂附件</font>
+            </a>
+          <% end %>
+
+
+          <% if video_on?(@article) %>
+            <div class='m' style="margin-top: 62px;">
+              <hr style="border: 1px solid #eeeeee;">
+              <span style="font-size: 22px;font-weight: bold;">
+                <i class="fa fa-lightbulb-o" aria-hidden="true"></i>课堂视频
+              </span>
+               
+
+              <% if current_user.present? %>
+                <video id="my-video" class="video-js" controls style="width: 100%;height: 100%" data-setup='{ "playbackRates": [1, 1.3, 1.5, 2, 3] }' onclick="video(<%=@article.id%>, '<%= form_authenticity_token %>')">
+                  <source src="http://video.zhihuichina.net.cn/vim02.mp4" type="video/mp4" id="_source">
+                </video>
+              <%else%>
+                <video id="my-video" class="video-js" controls style="width: 100%;height: 100%" data-setup='{ "playbackRates": [1, 1.3, 1.5, 2, 3] }'>
+                  <source src="http://video.zhihuichina.net.cn/<%=@article.video_name%>.mp4" type="video/mp4" id="_source">
+                </video>
+              <%end%>
+            </div>
+          <% end %>
+
+         <br><br><hr>
+
+           <div style="margin: 0 auto;width: 100%">
+            <br>
+             <% if will_page_prev?(params[:id],params[:category_id]) %>
+                <!-- <a id='button_left' class="pull-left" href="/articles/<%#= will_page_lower(params[:id],params[:category_id]) %>?category_id=<%#=params[:category_id]%>">
+                    <i class="fa fa-arrow-left"></i>上一篇
+                </a> -->
+            <% end %>
+
+            <% if will_page_next?(params[:id],params[:category_id]) %>
+               <!--  <a id="button_right" class="pull-right" href="/articles/<%#= will_page(params[:id],params[:category_id]) %>?category_id=<%#=params[:category_id]%>">
+                  下一篇<i class='fa fa-arrow-right'></i>
+                </a> -->
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </article>
+<div style="height: 20px;clear: both;"></div>
+<%else%>
+  <article>
+     <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          对不起，您没有权限访问！
+        </div>
+      </div>
+  </article>
+<%end%>
+
+  <script>
+    $('#my-video').bind('contextmenu',function(){ return false; });
+  </script>
+  
+
+
+  

@@ -1,0 +1,55 @@
+
+ 
+
+<%= form_tag author_admin_permissions_path, {method:'POST'} do %>
+  <%=hidden_field_tag :role_id, @role.id %>
+
+  <%if flash[:success] %>
+    <div id="myAlert" class="alert alert-success">
+      <a href="#" class="close" data-dismiss="alert">&times;</a>
+      <strong><%= flash[:success] %></strong>
+    </div>
+  <%end%>
+
+  <table id="sample-table-2" class="table table-striped table-bordered table-hover">
+    <thead>
+       
+      <tr>
+        <th width="10%">模块(<%=link_to '新增权限', '/admin/permissions/new', remote: true, 'data-toggle': "modal", 'data-target': "#layer", class: 'btn btn-minier btn-primary' %>)</th>
+        <th width="90%">角色：<%=@role.title%>
+          <button type="submit" class="btn btn-minier btn-danger pull-right"> <i class='icon-warning-sign'></i>授权</button>
+      
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @permissions.group_by(&:subject_class).each do |subject_class,permissions| %>
+        <tr>
+          <td><%=t "activerecord.models.#{subject_class.singularize}" %></td>
+          <td>
+            <span>全选&nbsp;<input class="checkAll" type="checkbox" value=""/>&nbsp;&nbsp;</span>
+            <% permissions.each do |perm|%>
+              <span>
+                <%=t "actions.#{perm.subject_action}" %>&nbsp;
+                <%= check_box_tag 'permissions[]',perm.id, @role_permission_ids.include?(perm.id), class: 'checkAll'  %>&nbsp;
+              </span>
+            <%end%>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  </div>
+  </div>
+<% end %>
+
+<div role="dialog" class="modal fade" id="layer">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+      <span id="new"></span>
+    </div>
+  </div>
+  </div>
+</div>
+

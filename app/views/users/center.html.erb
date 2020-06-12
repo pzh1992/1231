@@ -1,0 +1,114 @@
+<link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
+<%= render "/layouts/header" %>
+    
+ 
+ 
+<% unless flash[:notice].blank? %>
+  <div class="alert alert-info"> <%= flash[:notice]%></div>
+<%end%>
+
+ 
+<div class="top-content">
+  <div class="inner-bg">
+
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-10 col-sm-offset-3 form-box">
+          <div class="form-top">
+            <div class="form-top-left">
+              <h1 style='font-size: 28px;'>账号信息</h1>
+              <hr>
+              <p>有效期：<%=@user.end_time.to_s[0..19]%></p>
+              <p>登录号：<%= @user.email %>
+              <i class="fas fa-exclamation-circle fa-1x mb-1 sr-contact-3" data-toggle="tooltip" title="用于登录账号"></i></p>
+            </div>
+          </div>
+          <div class="form-bottom">
+            <%= form_tag "/users/center_update", onsubmit: "return check()", :method => 'post' do%>
+            <p>
+            <h1 style="font-size: 28px;">设置密码：</h1> 
+            <div class="form-top-right">
+              <i class="fa fa-key" data-toggle="tooltip" title='若首次登录，请尽快修改密码'></i>
+            </div>
+              <a onclick="password_html()" class="btn btn-primary btn-sm" id="password_show" style="color: white;">设置密码</a>
+              <br> 
+              <div class="form-group" id="password_html">
+              </div>
+              <div class="form-group" id="password_confirmation_html">
+              </div>
+
+              <span id="button_html"></span>
+            <%end%>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+ 
+ 
+ 
+
+<script>
+  function coupon(obj){
+    coupon_id = obj.id
+    $.ajax({
+      type:'get',
+      url:'/users/coupon_update',
+      data:{
+        'coupon_id': coupon_id
+      },
+      success:function(data){
+        if(data["bool"]){
+          alert(data["data"])
+          $("#" + coupon_id ).replaceWith('<a href="javascript:;" class="get-btn">'+
+                                          '<span>审核中...</span>'+
+                                        '</a>')
+        }else{
+          alert(data["data"])
+        }
+      }
+
+    })
+
+  }
+
+
+  $(function(){ $("[data-toggle='tooltip']").tooltip(); });
+
+	function check(){
+	  password = $('#password').val()
+	  password_confirmation = $('#password_confirmation').val()	
+	  if(password != password_confirmation){
+	  	alert("密码不一致")
+	  	return false;
+	  }
+	}
+
+  function password_html(){
+    $("#password_html").html('<input  type="password" required="required" name="password" id="password" placeholder="密码..." class="form-username form-control">')
+    $("#password_confirmation_html").html('<input type="password"  required="required"name="password_confirmation" placeholder="确认密码..." class="form-password form-control" id="password_confirmation">')
+    $("#button_html").html('<button type="submit" class="btn btn-sm btn-primary">保存</button>')
+    $("#password_show").remove()
+  }
+</script>
+
+<script type="text/javascript">
+function copyUrl2()
+    {
+        var Url2=document.getElementById("copy").innerText;
+        var oInput = document.createElement('input');
+        oInput.value = Url2;
+        document.body.appendChild(oInput);
+        oInput.select(); // 选择对象
+        document.execCommand("Copy"); // 执行浏览器复制命令
+        oInput.className = 'oInput';
+        oInput.style.display='none';
+        alert('复制成功');
+    }
+</script>
+ 
+
+ 
+

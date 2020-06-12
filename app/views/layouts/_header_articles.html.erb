@@ -1,0 +1,18 @@
+<header class="masthead" style="background-image: url('http://video.zhihuichina.net.cn/header.jpg')">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <div class="site-heading">
+          <h2>
+            <a href="/articles?category_id=<%= params[:category_id]%>" style="font-size: 44px;color: white;">
+              <%= Category.find(params[:category_id]).try(:title) if params[:id].nil? %>
+              <%= Article.find(params[:id]).try(:title) if params[:id].present?  %>
+            </a>
+          </h2>
+          <span class="subheading"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

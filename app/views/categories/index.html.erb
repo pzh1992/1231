@@ -1,0 +1,30 @@
+<h1 style="font-size: 70px;">双色球机选器
+(<a href="/articles" class='btn btn-sm btn-danger'>大乐透机选器</a>)
+</h1>
+<br>
+<%=form_tag categories_path,method: :get do%>
+  红1: <input style="height: 60px;width: 60px;" name="one" value="<%=params[:one]%>">
+  红2: <input style="height: 60px;width: 60px;" name="two" value="<%=params[:two]%>">
+  红3: <input style="height: 60px;width: 60px;" name="three" value="<%=params[:three]%>">
+  红4: <input style="height: 60px;width: 60px;" name="four" value="<%=params[:four]%>">
+  红5: <input style="height: 60px;width: 60px;" name="five" value="<%=params[:five]%>">
+  红6: <input style="height: 60px;width: 60px;" name="six" value="<%=params[:six]%>">
+  蓝球: <input name="ref" style="height: 60px;width: 100px;" type="number" oninput="if(value>16)value=16" value="<%=params[:ref]%>">
+  注数: <input name="number" value='10' style="height: 60px;width: 100px;" type="number" oninput="if(value>10000)value=10000" placeholder="请输入机选注数">
+  <%=submit_tag '机选', class: 'btn btn-sm btn-info'%>(共：<%= @counts.count%>注)
+<%end%>
+<br>
+<table class="table">
+  <tbody>
+  <tr>
+    <td colspan=3>机选结果</td>
+  </tr>
+  <% @counts.each_slice(2) do |counts|%>
+    <tr>
+      <% counts.each do |count|%>
+        <td><%=count%></td>
+      <%end%>
+    </tr>
+  <%end%>
+  </tbody>
+</table>

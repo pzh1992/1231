@@ -1,0 +1,14 @@
+<%= form_for [:admin,@article] do |f|%>
+  请填写权重: <%= f.number_field :weight,style: "width: 100%"%><br>
+  编写文章标题:<%=f.text_field :title,style: "width: 100%"%><br>
+  视频名称:<%=f.text_field :video_name,style: "width: 100%"%><br>
+  课堂附件:<%=f.text_field :exercise_name, style: "width: 100%"%><br><br>
+  是否上架:<%=f.select :status,['on','off'], style: "width: 100%"%>&nbsp;&nbsp;&nbsp;
+  是否需要订阅：<%= f.select :is_pay, [["需要订阅",true], ['不需要订阅',false]]%> &nbsp;&nbsp;&nbsp;
+  是否显示视频:<%=f.select :video_status,['on','off'], style: "width: 100%" %>&nbsp;&nbsp;&nbsp;
+  文章分类：<%=f.select :category_id, Category.pluck(:title,:id)%><br><br>
+
+
+  编写文章正文:<%=f.cktext_area :content %><br>
+  <%=f.submit '提交', class:"btn btn-sm btn-info"%>
+<%end%>

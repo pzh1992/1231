@@ -1,0 +1,8 @@
+<h4>新增权限</h4>
+<br>
+<%= form_for [:admin, @permission] do |f| %>
+  controller: <%= f.text_field :subject_class, style: "width: 100%"  %><br>
+  action: <%= f.text_field :subject_action, style: "width: 100%"  %><br><br>
+  <%=f.submit '提交', class: "btn btn-sm btn-primary"%>
+  <%=f.button '取消', class: "btn btn-sm btn-danger", "data-dismiss": "modal"%>
+<% end %>

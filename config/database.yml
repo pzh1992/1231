@@ -1,0 +1,15 @@
+development:
+  adapter: mysql2
+  database: study_ruby
+  username: root
+  password:
+  host: localhost
+
+
+production:
+  adapter: mysql2
+  database: study_ruby
+  username: root
+  password:
+  host: localhost
+
